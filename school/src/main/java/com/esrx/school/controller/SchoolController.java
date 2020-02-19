@@ -1,6 +1,7 @@
 package com.esrx.school.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esrx.school.model.Person;
+import com.esrx.school.model.School;
 import com.esrx.school.service.SchoolServiceImpl;
 
 @RestController
@@ -32,5 +34,17 @@ public class SchoolController {
 	public List<Person> getPersons(@RequestParam(value = "firstName", required = false) String firstName) {
 		logger.debug("Get users parameters - firstName=" + firstName);
 		return schoolService.getPersons(firstName);
+	}
+	
+	@GetMapping("/class")
+	public School getClass(@RequestParam(value = "className") String className) {
+		logger.debug("Get class " + className);
+		return schoolService.getClass(className);
+	}
+	
+	@GetMapping("/teacher")
+	public Optional<Person> getTeacher(@RequestParam(value = "className") String className) {
+		logger.debug("Get Teacher from class " + className);
+		return schoolService.getTeacher(className);
 	}
 }

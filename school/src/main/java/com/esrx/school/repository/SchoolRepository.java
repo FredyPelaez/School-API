@@ -1,14 +1,13 @@
 package com.esrx.school.repository;
 
-import java.util.List;
-
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import com.esrx.school.model.Person;
+import com.esrx.school.model.School;
 
 @Repository
-public interface SchoolRepository extends MongoRepository<Person, String>{
+public interface SchoolRepository extends MongoRepository<School, String>{
 
-	List<Person> findByFirstName(String firstName);
+	School findByClassName(String className);
+
 }
