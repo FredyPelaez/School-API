@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "School")
-public class School {
+@Document(collection = "Class")
+public class Class {
 	
 	@Id
 	private String id;
 	private String className;
 	private String teacherID;
-	private String [] studentIds;
+	private String [] studentIDs;
 	
 }

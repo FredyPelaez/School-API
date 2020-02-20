@@ -8,35 +8,25 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.esrx.school.model.Person;
-import com.esrx.school.model.School;
+import com.esrx.school.model.Class;
 import com.esrx.school.repository.PersonRepository;
-import com.esrx.school.repository.SchoolRepository;
+import com.esrx.school.repository.ClassRepository;
 
 @Service
 public class SchoolServiceImpl {
-
-	@Autowired
-	private KafkaTemplate<String, String> KafkaTemplate;
 	
 	@Autowired
 	PersonRepository personRepository;
 	
 	@Autowired
-	SchoolRepository schoolRepository;
-	
-	String kafkaTopic = "java-topic-app";
+	ClassRepository schoolRepository;
 	
 	final static Logger logger = LogManager.getLogger(SchoolServiceImpl.class);
 
-	
-	public void send(String message) {
-		KafkaTemplate.send(kafkaTopic, message);
-	}
 	
 	public List<Person> getPersons(String firstName) {
 		List<Person> persons = new ArrayList<>();
@@ -57,8 +47,8 @@ public class SchoolServiceImpl {
 		return persons;
 	}
 	
-	public School getClass(String className) {
-		School school = new School();
+	public Class getClass(String className) {
+		Class school = new Class();
 		
 		if(StringUtils.isNoneBlank(className)) {
 			return school = schoolRepository.findByClassName(className);
@@ -69,7 +59,7 @@ public class SchoolServiceImpl {
 	
 	public Optional<Person> getTeacher(String className){
 		Optional<Person> teacher = null;
-		School school = new School();
+		Class school = new Class();
 		if(StringUtils.isNotBlank(className)) {
 			school = schoolRepository.findByClassName(className);
 			teacher = personRepository.findById(school.getTeacherID());
